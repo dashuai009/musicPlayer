@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer player;
     ImageButton startbtn;
     int playing_file;
-   // ProgressBar musicProgressBar;
     SeekBar musicSeekBar;
     Timer timer;
     TimerTask timerTask;
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         musicSeekBar.setOnSeekBarChangeListener(new seekBarListener());
 
-        timer = new Timer();
+        timer = new Timer();//设置一个定时器，每秒更新一下进度条和时间
         timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -70,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public String calcTime(int time){
-        time/=1000;
-        int minute=time/60;
-        int second=time%60;
+    public String calcTime(int t){//将毫秒数转为分秒制
+        t/=1000;
+        int minute=t/60;
+        int second=t%60;
         return ""+(minute>=10?minute:"0"+minute)+":"+(second>=10?second:"0"+second);
     }
 
-    class pause_and_continue implements View.OnClickListener {
+    class pause_and_continue implements View.OnClickListener {//按钮点击事件
         @Override
         public void onClick(View v){
             if(player.isPlaying()){
@@ -92,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    class seekBarListener implements  SeekBar.OnSeekBarChangeListener{
+    class seekBarListener implements  SeekBar.OnSeekBarChangeListener{//进度条拖动事件
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             player.seekTo(progress);
